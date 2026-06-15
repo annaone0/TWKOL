@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="zh-Hant">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>台派 KOL 帳號監測儀錶板</title>
-<style>
+renderStats();<he<div class="alertbar" id="alertbar"></he>div>  <!-- CONTROLS -->ad>
+el.className = (k.status==="bad"||k.status==="warn") ? "kol abnormal" : "kol";<meta name="viewport" content="width=device-width, initial-scale=1.0">
+KOLS.sort((a,b)=>{var ka=(a.handle||"").replace(/^@/,"").toLowerCase();var kb=(b.handle||"").replace(/^@/,"").toLowerCase();return ka<kb?-1:(ka>kb?1:0);}); function renderAlerts(){var bar=document.getElementById("alertbar");if(!bar)return;var hit=KOLS.filter(function(k){return k.status==="bad"||k.status==="warn";});if(!hit.length){bar.innerHTML='<div class="ab-title">\u2705 \u5373\u6642\u707d\u60c5\u56de\u5831</div>div><div class="ab-empty">\u76ee\u524d\u6240\u6709\u5e33\u865f\u904b\u4f5c\u6b63\u5e38\uff0c\u7121\u7570\u5e38\u56de\u5831\u3002</div>div>';return;}bar.innerHTML='<div class="ab-title">\ud83d\udea8 \u5373\u6642\u707d\u60c5\u56de\u5831 \u00b7 \u76ee\u524d\u7570\u5e38\u5e33\u865f\uff08'+hit.length+' \u4f4d\uff09</div>div><div class="ab-list">'+hit.map(function(k){var u=(k.accts.threads&&k.accts.threads.url)?k.accts.threads.url:((k.accts.ig&&k.accts.ig.url)?k.accts.ig.url:"#");return '<a class="ab-item" href="'+u+'" target="_blank" rel="noopener">\u26a0\ufe0f '+k.name+'</a>a>';}).join("")+'</div>div>';} renderStats(); renderAlerts();<style>
   :root{
     --green-900:#1b5e20; --green-700:#2e7d32; --green-600:#388e3c;
     --green-500:#43a047; --grheen-300:#a5d6a7; --green-100:#e8f5e9;
