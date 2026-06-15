@@ -135,7 +135,7 @@
   .acct:hover{border-color:var(--green-500); background:var(--green-100);}
   .pf-ico{width:23px; height:23px; border-radius:7px; flex:none; display:grid; place-items:center; font-size:12px; font-weight:700; color:#fff;}
   .pf-threads{background:#000;} .pf-fb{background:#1877f2;} .pf-ig{background:linear-gradient(45deg,#f09433,#dc2743,#bc1888);}
-  .pf-yt{background:#ff0000;} .pf-x{background:#111;} .pf-miin{background:var(--green-600);}
+  .pf-yt{background:#ff0000;} .pf-x{background:#111;} .pf-miin{background:var(--green-600);} .pf-web{background:#607d6b;}
   .pf-meta{display:flex; flex-direction:column; line-height:1.25; min-width:0;}
   .pf-name{font-size:11.5px; font-weight:650;}
   .pf-state{font-size:10px; color:var(--muted); display:flex; align-items:center; gap:5px;}
@@ -322,7 +322,7 @@ const PLATFORMS = [
   {key:"ig",      label:"Instagram", cls:"pf-ig", ico:"IG"},
   {key:"yt",      label:"YouTube", cls:"pf-yt", ico:"▶"},
   {key:"x",       label:"X", cls:"pf-x", ico:"X"},
-  {key:"miin",    label:"Miin", cls:"pf-miin", ico:"M"},
+  {key:"miin",    label:"Miin", cls:"pf-miin", ico:"M"},`r`n  {key:"web",     label:"官網", cls:"pf-web", ico:"↗"},
 ];
 
 const KOLS = [
@@ -476,6 +476,34 @@ const KOLS = [
 
   { name:"Johnny Hsueh", handle:"@johnny.hsueh", prof:["商家"], status:"ok",
     accts:{ threads:{url:"https://www.threads.com/@johnny.hsueh", status:"ok"} }, backups:[] },
+  { name:"公視 PTS", handle:"@ptstaiwan", prof:["媒體"], status:"ok",
+    accts:{
+      web:{url:"https://www.pts.org.tw/", status:"ok"},
+      fb:{url:"https://www.facebook.com/ptstaiwan/", status:"ok"},
+      ig:{url:"https://www.instagram.com/pts_taiwan/", status:"ok"},
+      yt:{url:"https://www.youtube.com/user/pts", status:"ok"} },
+    backups:[{label:"公視官方網站", url:"https://www.pts.org.tw/"}] },
+
+  { name:"蔡英文", handle:"@iingwen", prof:["政治人物"], status:"ok",
+    accts:{
+      threads:{url:"https://www.threads.com/@iingwen", status:"ok"},
+      fb:{url:"https://www.facebook.com/tsaiingwen", status:"ok"},
+      ig:{url:"https://www.instagram.com/tsai_ingwen/", status:"ok"},
+      x:{url:"https://x.com/iingwen", status:"ok"},
+      yt:{url:"https://www.youtube.com/channel/UCQxDEcdI3AR3tflOgWBgBpQ", status:"ok"} }, backups:[] },
+
+  { name:"陳水扁", handle:"阿扁", prof:["政治人物"], status:"ok",
+    accts:{
+      threads:{url:"https://www.threads.com/search?q=%E9%99%B3%E6%B0%B4%E6%89%81", status:"ok"},
+      web:{url:"https://zh.wikipedia.org/wiki/%E9%99%B3%E6%B0%B4%E6%89%81", status:"ok"} },
+    backups:[{label:"Threads 確認有前總統陳水扁使用紀錄；精確帳號連結待補", url:"https://zh.wikipedia.org/wiki/Threads"}] },
+
+  { name:"賴清德", handle:"@chingtelai", prof:["政治人物"], status:"ok",
+    accts:{
+      threads:{url:"https://www.threads.com/@chingtelai", status:"ok"},
+      fb:{url:"https://www.facebook.com/chingtelai", status:"ok"},
+      ig:{url:"https://www.instagram.com/chingtelai/", status:"ok"},
+      x:{url:"https://x.com/ChingteLai", status:"ok"} }, backups:[] },
 ];
 
 /* ===== 渲染 ===== */
