@@ -274,8 +274,7 @@
       <div class="stat-label">總監測人數</div>
       <div class="stat-note">📩 歡迎私訊 <b>oneonelin</b> 更新名單！</div>
     </div>
-    <div class="stat"><div class="stat-num bad" id="st-bad">0</div><div class="stat-label">異常停權</div></div>
-    <div class="stat"><div class="stat-num warn" id="st-warn">0</div><div class="stat-label">搶救中</div></div>
+    <div class="stat"><div class="stat-num bad" id="st-abnormal">0</div><div class="stat-label">異常</div></div>
     <div class="stat"><div class="stat-num ok" id="st-ok">0</div><div class="stat-label">正常運作</div></div>
     <div class="stat"><div class="stat-num pending" id="st-pending">0</div><div class="stat-label">待查核</div></div>
   </div>
@@ -499,8 +498,7 @@ const KOLS = [
 
   { name:"陳水扁", handle:"阿扁", prof:["政治人物"], status:"warn",
     accts:{
-      threads:{url:"https://www.threads.com/search?q=%E9%99%B3%E6%B0%B4%E6%89%81", status:"bad"},
-      web:{url:"https://zh.wikipedia.org/wiki/%E9%99%B3%E6%B0%B4%E6%89%81", status:"ok"} },
+      threads:{url:"https://www.threads.com/search?q=%E9%99%B3%E6%B0%B4%E6%89%81", status:"bad"} },
     backups:[
       {label:"陳致中 @achung0122_takao", url:"https://www.threads.com/@achung0122_takao"},
       {label:"@kschool.20030329", url:"https://www.threads.com/@kschool.20030329"}
@@ -519,6 +517,8 @@ const KOLS = [
    accts:{ threads:{url:"https://www.threads.com/@choo7077", status:"ok"}, ig:{url:"https://www.instagram.com/choo7077/", status:"ok"} }, backups:[] },
   { name:"Venisa Yao", handle:"@venisayao", prof:["政治人物"], status:"ok",
    accts:{ threads:{url:"https://www.threads.com/@venisayao", status:"ok"} }, backups:[] },
+  { name:"TIMO TORNG", handle:"@timo_torng", prof:["政治人物"], status:"ok",
+   accts:{ threads:{url:"https://www.threads.com/@timo_torng", status:"ok"} }, backups:[] },
 ];
 
 /* ===== 渲染 ===== */
@@ -539,11 +539,11 @@ function countUp(el,to){
 function renderStats(){
   const c={ok:0,bad:0,warn:0,pending:0};
   KOLS.forEach(k=>c[k.status]++);
-  countUp(st_total,KOLS.length); countUp(st_bad,c.bad);
-  countUp(st_warn,c.warn); countUp(st_ok,c.ok); countUp(st_pending,c.pending);
+  countUp(st_total,KOLS.length); countUp(st_abnormal,c.bad+c.warn);
+  countUp(st_ok,c.ok); countUp(st_pending,c.pending);
 }
-const st_total=document.getElementById("st-total"), st_bad=document.getElementById("st-bad"),
-      st_warn=document.getElementById("st-warn"), st_ok=document.getElementById("st-ok"),
+const st_total=document.getElementById("st-total"), st_abnormal=document.getElementById("st-abnormal"),
+      st_ok=document.getElementById("st-ok"),
       st_pending=document.getElementById("st-pending");
 
 function render(list){
