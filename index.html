@@ -17,18 +17,15 @@
     margin:0; color:var(--ink);
     font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;
     background:
-      radial-gradient(42% 38% at 13% 31%, rgba(255,255,255,.92), transparent 58%),
-      radial-gradient(44% 36% at 31% 9%, rgba(255,236,169,.38), transparent 64%),
-      radial-gradient(60% 54% at 62% 55%, rgba(155,207,166,.46), transparent 64%),
-      radial-gradient(55% 46% at 72% 94%, rgba(209,241,224,.48), transparent 60%),
-      linear-gradient(138deg,#eaf8f4 0%,#d9efe0 27%,#c2dfbf 58%,#9ccaa5 100%);
+      radial-gradient(60% 55% at 50% 0%, rgba(255,255,255,.9), transparent 60%),
+      linear-gradient(160deg,#F8F9FA 0%,#F1F3F5 45%,#E9ECEF 100%);
     background-attachment:fixed; min-height:100vh; line-height:1.6;
   }
   /* film-grain / noise texture overlay */
   .bg-noise{position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.82; mix-blend-mode:soft-light;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.45' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.72'/%3E%3C/svg%3E");}
   /* decorative Jimmy-Liao-style background */
-  .bg-art{position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden;}
+  .bg-art{display:none;}
   .bg-art svg{position:absolute; bottom:0; left:50%; transform:translateX(-50%);
     width:min(1280px,118vw); height:auto; opacity:.5;}
   .wrap{position:relative; z-index:1; max-width:1480px; margin:0 auto; padding:32px 20px 80px;}
@@ -57,10 +54,21 @@
   .quote p{margin:0; font-size:17px; font-weight:500; color:var(--green-900);}
   .quote cite{display:block; margin-top:10px; font-style:normal; font-size:13.5px; color:var(--muted);}
 
+  /* Footer (relocated quote) */
+  .site-footer{ margin:48px 0 90px; }
+  .site-footer .quote{ margin-top:0; max-width:780px; margin-left:auto; margin-right:auto; border-left:5px solid var(--bad); background:rgba(255,255,255,.6); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border-top:1px solid rgba(255,255,255,.3); border-right:1px solid rgba(255,255,255,.3); border-bottom:1px solid rgba(255,255,255,.3); border-radius:0 14px 14px 0; box-shadow:0 10px 30px rgba(0,0,0,.06); }
+  .site-footer .quote p{ color:var(--ink); }
+
+  /* Floating Action Button */
+  .fab{ position:fixed; right:24px; bottom:24px; z-index:50; display:inline-flex; align-items:center; gap:8px; padding:14px 22px; border-radius:999px; background:var(--bad); color:#fff; font-weight:700; font-size:15px; text-decoration:none; letter-spacing:.3px; box-shadow:0 8px 24px rgba(225,20,131,.38), 0 2px 6px rgba(0,0,0,.18); transition:transform .15s ease, box-shadow .15s ease, background .15s ease; }
+  .fab:hover{ transform:translateY(-2px); box-shadow:0 12px 30px rgba(225,20,131,.46), 0 3px 8px rgba(0,0,0,.22); }
+  .fab:active{ transform:translateY(0); }
+  @media(max-width:600px){ .fab{ right:14px; bottom:14px; padding:12px 18px; font-size:14px; } }
+
   /* ---------- Stats bar ---------- */
   .stats{display:flex; flex-wrap:wrap; gap:14px; margin:26px 0 6px;}
   .stat{
-    flex:1; min-width:130px; background:rgba(255,255,255,.50); border:1px solid rgba(255,255,255,.62);
+    flex:1; min-width:130px; background:rgba(255,255,255,.6); border:1px solid rgba(255,255,255,.3); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
     border-radius:16px; padding:16px 18px; box-shadow:0 14px 34px rgba(27,94,32,.10), inset 0 1px 0 rgba(255,255,255,.7); text-align:center; backdrop-filter:blur(16px) saturate(130%); -webkit-backdrop-filter:blur(16px) saturate(130%);
   }
   .stat-total{flex:1.6; min-width:210px; text-align:left;
@@ -103,9 +111,9 @@
   /* ---------- Grid ---------- */
   .grid{display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:14px;}
   .kol{
-    background:linear-gradient(145deg,rgba(255,255,255,.54),rgba(255,255,255,.28)); border:1px solid rgba(255,255,255,.68); border-radius:18px;
-    padding:14px; box-shadow:0 18px 42px rgba(23,82,40,.12), inset 0 1px 0 rgba(255,255,255,.72); display:flex; flex-direction:column; gap:10px;
-    transition:.18s; backdrop-filter:blur(18px) saturate(135%); -webkit-backdrop-filter:blur(18px) saturate(135%);
+    background:rgba(255,255,255,.6); border:1px solid rgba(255,255,255,.3); border-radius:18px;
+    padding:14px; box-shadow:0 12px 32px rgba(0,0,0,.07), inset 0 1px 0 rgba(255,255,255,.6); display:flex; flex-direction:column; gap:10px;
+    transition:.18s; backdrop-filter:blur(10px) saturate(125%); -webkit-backdrop-filter:blur(18px) saturate(135%);
   }
   .kol:hover{transform:translateY(-3px); box-shadow:0 22px 48px rgba(27,94,32,.18), inset 0 1px 0 rgba(255,255,255,.75); border-color:rgba(255,255,255,.86);} .kol.abnormal{background:linear-gradient(145deg,rgba(253,230,228,.92),rgba(252,214,210,.66)); border-color:rgba(187,45,32,.42); box-shadow:0 18px 42px rgba(187,45,32,.18), inset 0 1px 0 rgba(255,255,255,.5);} .kol.abnormal:hover{border-color:rgba(187,45,32,.7); box-shadow:0 22px 48px rgba(187,45,32,.26);} .kol.abnormal .avatar{background:#bb2d20; color:#fff;} .alertbar{margin:0 0 18px; background:linear-gradient(135deg,rgba(253,230,228,.95),rgba(252,214,210,.78)); border:1px solid rgba(187,45,32,.35); border-radius:16px; padding:13px 18px; box-shadow:0 10px 28px rgba(187,45,32,.12);} .alertbar .ab-title{font-size:13px; font-weight:800; color:#bb2d20; display:flex; align-items:center; gap:7px; margin-bottom:8px;} .alertbar .ab-list{display:flex; flex-wrap:wrap; gap:8px;} .alertbar a.ab-item{display:inline-flex; align-items:center; gap:6px; text-decoration:none; font-size:12px; font-weight:700; color:#9a241a; background:rgba(255,255,255,.6); border:1px solid rgba(187,45,32,.3); border-radius:999px; padding:4px 11px; transition:.15s;} .alertbar a.ab-item:hover{background:#bb2d20; color:#fff;} .alertbar .ab-empty{font-size:12.5px; color:#1e7a44; font-weight:700;}
   .kol-head{display:flex; align-items:center; gap:10px;}
@@ -261,10 +269,6 @@
     <span class="eyebrow">台派 KOL 帳號監測儀錶板 · 公版示意</span>
     <h1>台派 KOL 帳號狀態即時查詢</h1>
     <p class="sub">2026/06/15 Meta 無預警大規模停權事件 · 協助大家即時掌握所追蹤 KOL 的帳號狀態與備用小帳</p>
-    <blockquote class="quote">
-      <p>「如果 10 個小 KOL 跟一個大 KOL 有同樣的粉絲量，那 10 個小 KOL 分享議題後的宣傳能力會比一個大 KOL 更好，因為受眾特質更多元分散，擴散效果更好。」</p>
-      <cite>— 沈伯洋（台北市長候選人 · 現任立委）</cite>
-    </blockquote>
   </header>
 
   <!-- STATS BAR -->
@@ -313,7 +317,16 @@
     ⚠️ 本頁為公版示意，帳號狀態欄位需人工查核後填入，並非即時自動偵測。<br>
     資料整理中，歡迎私訊 oneonelin 回報最新狀態與備用小帳連結。待查核項目已於 2026/06/16 依公開頁面可見性重新整理。
   </p>
+
+  <footer class="site-footer">
+    <blockquote class="quote">
+      <p>「如果 10 個小 KOL 跟一個大 KOL 有同樣的粉絲量，那 10 個小 KOL 分享議題後的宣傳能力會比一個大 KOL 更好，因為受眾特質更多元分散，擴散效果更好。」</p>
+      <cite>— 沈伯洋（台北市長候選人 · 現任立委）</cite>
+    </blockquote>
+  </footer>
 </div>
+
+<a class="fab" href="https://forms.gle/X3WSgSE4JTb3DCm67" target="_blank" rel="noopener">＋ 回報異常 / 備用小帳</a>
 
 <script>
 /* ===== 資料區：之後把完整網址貼進來即可，狀態 status 用 ok / bad / warn / pending ===== */
@@ -608,7 +621,14 @@ document.getElementById("filters").addEventListener("click", e=>{
 });
 search.addEventListener("input", apply);
 
-KOLS.sort(function(a,b){var ka=(a.handle||"").replace(/^@/,"").toLowerCase();var kb=(b.handle||"").replace(/^@/,"").toLowerCase();return ka<kb?-1:(ka>kb?1:0);});
+var STATUS_PRIORITY={bad:0,warn:1,pending:2,ok:3};
+KOLS.sort(function(a,b){
+  var pa=(STATUS_PRIORITY[a.status]!=null?STATUS_PRIORITY[a.status]:9);
+  var pb=(STATUS_PRIORITY[b.status]!=null?STATUS_PRIORITY[b.status]:9);
+  if(pa!==pb) return pa-pb;
+  var ka=(a.handle||"").replace(/^@/,"").toLowerCase();var kb=(b.handle||"").replace(/^@/,"").toLowerCase();
+  return ka<kb?-1:(ka>kb?1:0);
+});
 function renderAlerts(){
   var bar=document.getElementById("alertbar"); if(!bar) return;
   var hit=KOLS.filter(function(k){return k.status==="bad"||k.status==="warn";});
