@@ -294,6 +294,7 @@ function sortKols(){
   });
 }
 
+/* 補齊剛剛被截斷的 renderAlerts 函式 */
 function renderAlerts(){
   const bar=document.getElementById("alertbar"); if(!bar) return;
   const hit=KOLS.filter(function(k){return k.status==="bad";});
@@ -302,4 +303,35 @@ function renderAlerts(){
       '<div class="ab-empty">目前所有帳號運作正常，無異常回報。</div>';
     return;
   }
-  bar.innerHTML='<div class="ab-title">🚨 即時災情回報
+  bar.innerHTML='<div class="ab-title">🚨 即時災情回報・目前異常帳號</div>'+
+    '<div class="ab-list">'+hit.map(function(k){
+      return '<a href="#" class="ab-item">⚠️ '+esc(k.name)+'</a>';
+    }).join("")+'</div>';
+}
+
+/* ===== 核心啟動引擎：讀取 CSV ===== */
+// 先在畫面上顯示 Loading 狀態
+grid.innerHTML = '<div class="empty">📡 即時數據同步中...</div>';
+
+Papa.parse(SHEET_CSV, {
+  download: true,       // 告訴 PapaParse 這是一個外部網址，請去下載
+  header: true,         // 第一列是標題 (Name, Threads網址 等)
+  skipEmptyLines: true, // 略過空白行
+  complete: function(results) {
+    // 1. 下載完成後，將每一列資料轉換成我們設定好的 KOL 格式
+    KOLS = results.data.map(rowToKol);
+    
+    // 2. 依照「異常優先、字母序」進行排序
+    sortKols();
+    
+    // 3. 把資料渲染到畫面上
+    render(KOLS);
+    renderStats();
+    renderAlerts();
+  },
+  error: function(err) {
+    // 如果發生錯誤 (如網址失效或沒有網路)
+    console.error("CSV 解析失敗:", err);
+    grid.innerHTML = '<div class="empty" style="color:#bb2d20;">無法載入最新狀態，請稍後再試或檢查網路連線。</div>';
+  }
+});
