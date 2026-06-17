@@ -143,7 +143,17 @@ h1{margin:0 0 6px; font-size:30px; letter-spacing:.5px;}
   box-shadow: 0 4px 12px rgba(187,45,32,.3);
 }
 
-.footnote{margin-top:34px; font-size:12.5px; color:var(--muted); text-align:center; line-height:1.8;}
+.footnote{
+  margin-top:34px; 
+  font-size:13px; 
+  color:var(--muted); 
+  text-align:center; 
+  line-height:1.8;
+  background: rgba(255,255,255,0.5);
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.6);
+}
 .empty{grid-column:1/-1; text-align:center; color:var(--muted); padding:40px;}
 
 /* RWD 斷點設定 */
@@ -181,7 +191,6 @@ h1{margin:0 0 6px; font-size:30px; letter-spacing:.5px;}
 
 <div class="wrap">
 <header class="hero">
-<!-- 1. 刪除「公版示意」的字眼 -->
 <span class="eyebrow">台派 KOL 帳號監測儀錶板</span>
 <h1>台派 KOL 帳號狀態即時查詢</h1>
 <p class="sub">2026/06/15 Meta 無預警大規模停權事件 · 協助大家即時掌握所追蹤 KOL 的帳號狀態與備用小帳</p>
@@ -191,7 +200,6 @@ h1{margin:0 0 6px; font-size:30px; letter-spacing:.5px;}
 <div class="stat stat-total">
 <div class="stat-num" id="st-total">0</div>
 <div class="stat-label">總監測人數</div>
-<!-- 2. 更新文案，引導使用者點擊按鈕填表 -->
 <div class="stat-note">📩 發現遺漏或錯誤？<b>請點擊右下角紅色按鈕填表回報！</b></div>
 </div>
 <div class="stat"><div class="stat-num bad" id="st-abnormal">0</div><div class="stat-label">異常</div></div>
@@ -206,13 +214,12 @@ h1{margin:0 0 6px; font-size:30px; letter-spacing:.5px;}
 <input id="search" type="text" placeholder="搜尋 KOL 名稱或帳號（例如：蒼藍鴿、@drchesttu）">
 </label>
 </div>
+<!-- 更新：刪除多餘分類，只保留精簡版 5 類 -->
 <div class="filters" id="filters">
 <button class="chip active" data-f="all">全部</button>
-<button class="chip" data-f="政論家">#政論家</button>
 <button class="chip" data-f="內容創作者">#內容創作者</button>
 <button class="chip" data-f="醫師">#醫師</button>
 <button class="chip" data-f="政治人物">#政治人物</button>
-<button class="chip" data-f="演藝圈人物">#演藝圈人物</button>
 <button class="chip" data-f="媒體">#媒體</button>
 <button class="chip" data-f="商家">#商家</button>
 </div>
@@ -224,10 +231,11 @@ h1{margin:0 0 6px; font-size:30px; letter-spacing:.5px;}
 
 <div class="grid" id="grid"></div>
 
-<p class="footnote">
-⚠️ 帳號狀態欄位需人工查核後填入，並非即時自動偵測。<br>
-資料來源為 Google Sheet（即時讀取），歡迎透過右下方按鈕回報最新狀態與備用小帳連結。
-</p>
+<!-- 註腳與免責聲明 -->
+<div class="footnote">
+  <p style="margin:0 0 8px;">⚠️ 帳號狀態欄位需人工查核後填入，並非即時自動偵測。資料來源為 Google Sheet，歡迎透過右下角按鈕回報最新狀態。</p>
+  <p style="margin:0; font-size: 12px; color: var(--green-900);">🛡️ <b>免責聲明：</b>本看板名單為網友熱心協作回報，旨在協助因 Meta 停權事件失聯的創作者與受眾重新連結。<br>收錄名單不代表本站對其過往言論之背書，請大家自行評估追蹤。</p>
+</div>
 
 <footer class="site-footer">
 <blockquote class="quote">
@@ -291,7 +299,6 @@ function renderStats(){
   countUp(st_total,KOLS.length); countUp(st_abnormal,c.bad); countUp(st_ok,c.ok);
 }
 
-/* 3. 升級版備用小帳：含 http/https 才渲染為超顯眼按鈕，否則純文字 */
 function backupHtml(raw){
   if(!raw || raw === "待補充") return '<div class="backup"><b>備用小帳：</b><span>待補充</span></div>';
   if(isUrl(raw)) return '<div class="backup" style="border:none; padding-top:4px;"><a class="backup-btn" href="'+esc(raw)+'" target="_blank" rel="noopener">👉 點此前往備用小帳</a></div>';
@@ -360,6 +367,7 @@ function sortKols(){
   });
 }
 
+/* 更新：跑馬燈點擊跳轉機制 */
 function renderAlerts(){
   const bar=document.getElementById("alertbar"); if(!bar) return;
   const hit=KOLS.filter(function(k){return k.status==="bad";});
@@ -368,11 +376,47 @@ function renderAlerts(){
       '<div class="ab-empty">目前所有帳號運作正常，無異常回報。</div>';
     return;
   }
+  // 加上 data-name 屬性，方便點擊時抓取目標名稱
   bar.innerHTML='<div class="ab-title">🚨 即時災情回報・目前異常帳號</div>'+
     '<div class="ab-list">'+hit.map(function(k){
-      return '<a href="#" class="ab-item">⚠️ '+esc(k.name)+'</a>';
+      return '<a href="#" class="ab-item" data-name="'+esc(k.name)+'">⚠️ '+esc(k.name)+'</a>';
     }).join("")+'</div>';
 }
+
+/* 跑馬燈點擊事件監聽器：滑動到卡片並加上發光特效 */
+document.getElementById("alertbar").addEventListener('click', function(e){
+  const btn = e.target.closest('.ab-item');
+  if(!btn) return;
+  e.preventDefault();
+  const targetName = btn.getAttribute('data-name');
+  
+  // 如果不是顯示全部，自動切換回全部，確保找得到卡片
+  if(activeFilter !== "all") {
+    document.querySelector('.chip[data-f="all"]').click();
+  }
+  
+  // 給 DOM 一點時間重新渲染
+  setTimeout(function(){
+    const cards = document.querySelectorAll('.kol');
+    for(let i=0; i<cards.length; i++){
+      if(cards[i].querySelector('.kol-name').textContent === targetName) {
+        cards[i].scrollIntoView({behavior: "smooth", block: "center"});
+        
+        // 卡片高亮特效
+        cards[i].style.transition = "transform 0.4s, box-shadow 0.4s";
+        cards[i].style.boxShadow = "0 0 0 4px #bb2d20, 0 18px 42px rgba(187,45,32,.3)";
+        cards[i].style.transform = "scale(1.03)";
+        
+        // 特效結束後恢復原狀
+        setTimeout(function(){
+          cards[i].style.boxShadow = "";
+          cards[i].style.transform = "";
+        }, 1500);
+        break;
+      }
+    }
+  }, 50);
+});
 
 /* ===== 核心啟動引擎：讀取 CSV ===== */
 grid.innerHTML = '<div class="empty">📡 即時數據同步中...</div>';
